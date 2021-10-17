@@ -15,8 +15,6 @@
  */
 package io.github.ldelpino.libs.tree;
 
-import io.github.ldelpino.libs.tree.iterators.TreeIterator;
-import io.github.ldelpino.libs.tree.iterators.TreeIterator.IteratorType;
 import java.util.Collection;
 
 /**
@@ -40,6 +38,97 @@ public interface Tree<T> extends Collection<T> {
     public T getRoot();
 
     /**
+     * Establece el nuevo nodo que hara funcion de raiz.
+     *
+     * @param root el nuevo nodo establecido que hara funcion de raiz.
+     */
+    public void setRoot(T root);
+
+    /**
+     * Establece si este nodo tiene un nodo padre.
+     * <p>
+     * Un nodo tiene un nodo padre sino es la raiz del arbol.</p>
+     *
+     * @return devuelve <strong>true</strong> si este nodo tiene un nodo padre,
+     * de lo contrario devuelve <strong>false</strong>.
+     */
+    public boolean hasFather();
+
+    /**
+     * Devuelve el nodo padre de este arbol.
+     *
+     * @return el nodo padre de este nodo, si este existe, de lo contrario
+     * devuelve <strong>null</strong>.
+     */
+    public T getFather();
+
+    /**
+     * Devuelve el nodo padre como un arbol.
+     *
+     * @return devuelve un arbol donde el nodo padre de este nodo es el nodo
+     * raiz, si este existe, de lo contrario devuelve <strong>null</strong>.
+     */
+    public Tree<T> getTreeFather();
+
+    /**
+     * Establece si este arbol tiene un hijo izquierdo.
+     *
+     * @return <strong>true</strong> si el arbol posee un hijo izquierdo, de lo
+     * contrario devuelve <strong>false</strong>.
+     */
+    public boolean hasLeftSon();
+
+    /**
+     * Establece si este arbol tiene hijos.
+     *
+     * @return <strong>true</strong> si el arbol posee hijos, de lo contrario
+     * devuelve <strong>false</strong>.
+     */
+    public boolean hasSons();
+
+    /**
+     * Devuelve la cantidad de hijos que posee el arbol.
+     *
+     * @return devuelve <strong>0</strong> si el arbol no posee hijos, o un
+     * numero positivo mayor o igual que <strong>1</strong> que establece la
+     * cantidad de hijos que posee este arbol.
+     */
+    public int getSonsCount();
+
+    /**
+     * Devuelve el hijo izquierdo, si este existe.
+     *
+     * @return devuelve el hijo izquierdo si este existe, de lo contrario
+     * devuelve <strong>null</strong>.
+     */
+    public T getLeftSon();
+
+    /**
+     * Devuelve el subarbol correspondiente al hijo izquierdo, si este existe.
+     *
+     * @return devuelve el arbol correspondiente al hijo izquierdo si este
+     * existe, de lo contrario devuelve <strong>null</strong>.
+     */
+    public Tree<T> getLeftSonTree();
+
+    /**
+     * Devuelve una coleccion con los hijos del arbol.
+     *
+     * @return devuelve la coleccion con ninguno, uno o varios hijos de este
+     * arbol.
+     */
+    public Collection<T> getSons();
+
+    /**
+     * Devuelve el subarbol correspondiente al hijo establecido.
+     *
+     * @param node el nodo del hijo del cual se necesita obtener su arbol.
+     * @return devuelve el arbol del hijo si este existe, de lo contrario
+     * devuelve <strong>null</strong>.
+     */
+    public Tree<T> getSonTree(T node);
+
+    /**
      * Establece si el arbol es un arbol general o no.
      * <p>
      * Un arbol general es una estructura de datos donde cada nodo puede tener
@@ -53,24 +142,45 @@ public interface Tree<T> extends Collection<T> {
     public boolean isGeneralTree();
 
     /**
-     * Devuelve el nivel del arbol.
-     * <p>
-     * El nivel del arbol es el nivel del nodo almacenado con respecto a su
-     * padre, si este existe.</p>
-     *
-     * @return el nivel del nodo del arbol.
-     */
-    public int getTreeLevel();
-
-    /**
      * Devuelve la altura del arbol.
      * <p>
      * La altura de un arbol es la profundidad del arbol. La altura de un arbol
-     * es equivalente al nivel del ultimo nodo del arbol.</p>
+     * es equivalente a ir contando los nodos izquierdos de los nodos
+     * izquierdos.</p>
      *
      * @return la altura del arbol.
      */
     public int getTreeHeight();
+
+    /**
+     * Devuelve el nivel del arbol.
+     * <p>
+     * El nivel del arbol es el nivel del nodo almacenado con respecto a su
+     * padre, si el nodo del arbol es la raiz del arbol, entonces devuelve
+     * <strong>0</strong></p>
+     *
+     * @return el nivel del nodo del arbol.
+     */
+    public int getLevelNode();
+
+    /**
+     * Devuelve los nodos hojas de este arbol.
+     * <p>
+     * Se considera un nodo hoja a un nodo del arbol que no posee hijos.</p>
+     *
+     * @return devuelve los nodos hojas a partir de este arbol.
+     */
+    public Collection<T> getLeaves();
+
+    /**
+     * Establece si un nodo es hoja o no.
+     *
+     * @param node el nodo a evaluar si es hoja.
+     * @return devuelve <strong>true</strong> si el nodo a evaluar es un nodo
+     * hoja, de lo contrario si el nodo a evaluar no es hoja o no existe,
+     * entonces devuelve <strong>false</strong>.
+     */
+    public boolean isNodeALeaf(T node);
 
     /**
      * Devuelve el iterador por defecto del arbol.
@@ -81,12 +191,4 @@ public interface Tree<T> extends Collection<T> {
      */
     @Override
     public TreeIterator<T> iterator();
-
-    /**
-     * Devuelve el iterador deseado del arbol.
-     *
-     * @param iteratorType el identificador del iterador a obtener.
-     * @return el iterador del arbol.
-     */
-    public TreeIterator<T> iterator(IteratorType iteratorType);
 }
