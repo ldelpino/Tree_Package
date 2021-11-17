@@ -16,6 +16,8 @@
 package io.github.ldelpino.libs.tree;
 
 import java.util.AbstractCollection;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Permite establecer las bases para la creacion de arboles binario o generales.
@@ -71,6 +73,15 @@ public abstract class AbstractTree<T> extends AbstractCollection<T> implements T
     @Override
     public boolean hasSons() {
         return getSonsCount() > 0;
+    }
+    
+    @Override
+    public Collection<T> getSons() {
+        ArrayList<T> sons = new ArrayList<>(getSonsCount());
+        getTreeSons().forEach(tree -> {
+            sons.add(tree.getRoot());
+        });
+        return sons;
     }
 
     @Override

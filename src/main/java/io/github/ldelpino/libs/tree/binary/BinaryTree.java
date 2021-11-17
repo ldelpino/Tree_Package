@@ -16,7 +16,7 @@
 package io.github.ldelpino.libs.tree.binary;
 
 import io.github.ldelpino.libs.tree.AbstractTree;
-import io.github.ldelpino.libs.tree.TreeIterator;
+import io.github.ldelpino.libs.tree.Tree;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -88,13 +88,13 @@ public class BinaryTree<T> extends AbstractTree<T> {
     }
 
     @Override
-    public Collection<T> getSons() {
-        ArrayList<T> sons = new ArrayList<>(getSonsCount());
+    public Collection<Tree<T>> getTreeSons() {
+        ArrayList<Tree<T>> sons = new ArrayList<>(getSonsCount());
         if (hasLeftSon()) {
-            sons.add(leftSon.getRoot());
+            sons.add(leftSon);
         }
         if (hasRightSon()) {
-            sons.add(rightSon.getRoot());
+            sons.add(rightSon);
         }
         return sons;
     }
@@ -214,77 +214,5 @@ public class BinaryTree<T> extends AbstractTree<T> {
     public void clear() {
         leftSon = null;
         rightSon = null;
-    }
-
-    public abstract class BinaryTreeIterator<T> implements TreeIterator<T> {
-
-        protected BinaryTree<T> current;
-        protected BinaryTree<T> next;
-
-        public BinaryTreeIterator(BinaryTree<T> current) {
-            this.current = current;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return next != null;
-        }
-    }
-
-    public class PreOrderIterator<T> extends BinaryTreeIterator<T> {
-
-        public PreOrderIterator(BinaryTree<T> current) {
-            super(current);
-            next = this.current.hasLeftSon() ? this.current.getLeftSonTree()
-                    : this.current.hasRightSon() ? this.current.getRightSonTree() : null;
-        }
-
-        @Override
-        public T next() {
-            current = next;
-            if (hasNext()) {
-                next = next.hasLeftSon() ? next.getLeftSonTree()
-                        : next.hasRightSon() ? next.getRightSonTree() : null;
-            }
-            return current != null ? current.getRoot() : null;
-        }
-    }
-
-    public class EntreOrderIterator<T> extends BinaryTreeIterator<T> {
-
-        public EntreOrderIterator(BinaryTree<T> current) {
-            super(current);
-            next = this.current.hasFather() ? this.current.getTreeFather()
-                    : this.current.hasRightSon() ? this.current.getRightSonTree() : null;
-        }
-
-        @Override
-        public T next() {
-            current = next;
-            if (hasNext()) {
-                next = next.hasFather() ? next.getTreeFather()
-                        : next.hasRightSon() ? next.getRightSonTree() : null;
-            }
-            return current != null ? current.getRoot() : null;
-        }
-    }
-
-    public class PosOrderIterator<T> extends BinaryTreeIterator<T> {
-
-        public PosOrderIterator(BinaryTree<T> current) {
-            super(current);
-            next = this.current.hasLeftSon() ? this.current.getRightSonTree()
-                    : this.current.hasFather() ? this.current.getTreeFather() : null;
-        }
-
-        @Override
-        public T next() {
-            current = next;
-            if (hasNext()) {
-                next = next.hasLeftSon() ? next.getRightSonTree()
-                        : next.hasFather() ? next.getTreeFather() : null;
-            }
-            return current != null ? current.getRoot() : null;
-        }
     }
 }

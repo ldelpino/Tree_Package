@@ -120,6 +120,14 @@ public interface Tree<T> extends Collection<T> {
     public Collection<T> getSons();
 
     /**
+     * Devuelve una coleccion con los subarboles hijos del arbol.
+     *
+     * @return devuelve la coleccion con ninguno, uno o varios subarboles hijos
+     * de este arbol.
+     */
+    public Collection<Tree<T>> getTreeSons();
+
+    /**
      * Devuelve el subarbol correspondiente al hijo establecido.
      *
      * @param node el nodo del hijo del cual se necesita obtener su arbol.
