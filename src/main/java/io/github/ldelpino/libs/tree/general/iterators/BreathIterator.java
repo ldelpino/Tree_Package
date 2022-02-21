@@ -13,28 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.ldelpino.libs.tree.binary;
+package io.github.ldelpino.libs.tree.general.iterators;
+
+import io.github.ldelpino.libs.tree.general.GeneralTree;
+import io.github.ldelpino.libs.tree.general.GeneralTreeIterator;
+import java.util.Collection;
+import java.util.Deque;
 
 /**
  *
  * @author EL ROJO
  * @param <T>
  */
-public class PreOrderIterator<T> extends BinaryTreeIterator<T> {
+public class BreathIterator<T> extends GeneralTreeIterator<T> {
 
-    public PreOrderIterator(BinaryTree<T> current) {
-        super(current);
-        next = this.current.hasLeftSon() ? this.current.getLeftSonTree()
-                : this.current.hasRightSon() ? this.current.getRightSonTree() : null;
+    private Deque<GeneralTree<T>> deque;
+    
+    public BreathIterator(GeneralTree<T> tree) {
+        super(tree);
+        current = tree;
+        if(tree.hasSons()) {
+            deque.addAll((Collection<GeneralTree<T>>)tree.getTreeSons());
+        }
     }
 
     @Override
     public T next() {
-        current = next;
-        if (hasNext()) {
-            next = next.hasLeftSon() ? next.getLeftSonTree()
-                    : next.hasRightSon() ? next.getRightSonTree() : null;
-        }
-        return current != null ? current.getRoot() : null;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
+
 }

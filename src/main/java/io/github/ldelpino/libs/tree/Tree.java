@@ -20,11 +20,32 @@ import java.util.Collection;
 /**
  * Establece el concepto logico de un arbol.
  * <p>
- * Un arbol es una estructura de datos donde, los elementos estan ordenados
- * jerarquicamente.</p>
+ * Un arbol es una estructura de datos que almacena un conjunto de elementos
+ * ordenados en forma jerarquica, donde el nodo raiz es el que contiene a sus
+ * hijos y estos a sus hijos hasta que los nodos no tengan mas hijos.</p>
+ * <p>
+ * A los nodos que no tienen hijos se les llama nodos hojas y al nodo que
+ * representa la jerarquia maxima de la estructura se le llama nodo raiz.</p>
+ * <p>
+ * Los arboles pueden ser binarios o generales, los arboles binarios son
+ * aquellos donde los nodos no pueden tener mas de dos hijos,mientras que los
+ * arboles generales no poseen limiten de cuantos hijos pueden tener.</p>
+ * <p>
+ * Por definicion los arboles son estructuras recursivas, dado que los nodos
+ * hijos de un arbol tambien son arboles.</p>
+ * <p>
+ * Un arbol puede ser visto como un grafo conexo y aciclico, donde todos los
+ * nodos estan conectados con algun otro nodo (conexo) y solo existe un camino
+ * desde un nodo hacia otro (aciclico).</p>
+ * <p>
+ * Los arboles son conjuntos de elementos, por tanto son representados tambien a
+ * traves de la clase {@link java.util.Collection}, como una coleccion de
+ * elementos.</p>
  *
- * @author EL ROJO
- * @param <T> el tipo de dato de los nodos del arbol.
+ * @author Lazaro Cesar del Pino Olivera
+ * @since jdk 16.0.1
+ * @version 1.0
+ * @param <T> El tipo de dato de la informacion que almacena el nodo del arbol.
  */
 public interface Tree<T> extends Collection<T> {
 
@@ -125,7 +146,7 @@ public interface Tree<T> extends Collection<T> {
      * @return devuelve la coleccion con ninguno, uno o varios subarboles hijos
      * de este arbol.
      */
-    public Collection<Tree<T>> getTreeSons();
+    public Collection<Tree<T>> getCollectionTreeSons();
 
     /**
      * Devuelve el subarbol correspondiente al hijo establecido.
@@ -140,7 +161,7 @@ public interface Tree<T> extends Collection<T> {
      * Establece si el arbol es un arbol general o no.
      * <p>
      * Un arbol general es una estructura de datos donde cada nodo puede tener
-     * mas de dos hijos adiferencia de los aboles binarios donde el nodo solo
+     * mas de dos hijos a diferencia de los arboles binarios donde el nodo solo
      * puede tener como maximo dos hijos, un hijo izquierdo y un hijo
      * derecho.</p>
      *
@@ -153,8 +174,8 @@ public interface Tree<T> extends Collection<T> {
      * Devuelve la altura del arbol.
      * <p>
      * La altura de un arbol es la profundidad del arbol. La altura de un arbol
-     * es equivalente a ir contando los nodos izquierdos de los nodos
-     * izquierdos.</p>
+     * se calcula como la altura del hermano de mayor altura, donde la altura de
+     * cada nodo se calcula como la mayor altura de sus nodos hijos.</p>
      *
      * @return la altura del arbol.
      */
@@ -163,9 +184,10 @@ public interface Tree<T> extends Collection<T> {
     /**
      * Devuelve el nivel del arbol.
      * <p>
-     * El nivel del arbol es el nivel del nodo almacenado con respecto a su
-     * padre, si el nodo del arbol es la raiz del arbol, entonces devuelve
-     * <strong>0</strong></p>
+     * El nivel del arbol es el mayor nivel del nodo almacenado con respecto a
+     * su padre, si el nodo del arbol es la raiz del arbol, entonces devuelve
+     * <strong>0</strong> si es el nodo hijo de la raiz devuelve
+     * <strong>1</strong>, y asi sucesivamente.</p>
      *
      * @return el nivel del nodo del arbol.
      */
@@ -179,6 +201,14 @@ public interface Tree<T> extends Collection<T> {
      * @return devuelve los nodos hojas a partir de este arbol.
      */
     public Collection<T> getLeaves();
+
+    /**
+     * Establece si este arbol es un nodo hoja o no.
+     *
+     * @return devuelve <strong>true</strong> si este arbol es un nodo hoja, de
+     * lo contrario devuelve <strong>false</strong>.
+     */
+    public boolean isNodeALeaf();
 
     /**
      * Establece si un nodo es hoja o no.

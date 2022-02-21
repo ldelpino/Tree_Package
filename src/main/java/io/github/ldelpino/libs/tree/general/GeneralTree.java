@@ -40,6 +40,20 @@ public class GeneralTree<T> extends AbstractTree<T> {
         this(root, null);
     }
 
+    /**
+     * Establece si el arbol es un arbol general o no.
+     * <p>
+     * Un arbol general es una estructura de datos donde cada nodo puede tener
+     * mas de dos hijos a diferencia de los arboles binarios donde el nodo solo
+     * puede tener como maximo dos hijos, un hijo izquierdo y un hijo
+     * derecho.</p>
+     * <p>
+     * El metodo es <strong>final</strong> para evitar inconsistencias o
+     * redundancias entre los diferentes tipos de arboles y siempre devolvera
+     * <strong>true</strong>.</p>
+     *
+     * @return true.
+     */
     @Override
     public final boolean isGeneralTree() {
         return true;
@@ -59,7 +73,7 @@ public class GeneralTree<T> extends AbstractTree<T> {
     }
 
     @Override
-    public Collection<Tree<T>> getTreeSons() {
+    public Collection<Tree<T>> getCollectionTreeSons() {
         LinkedList<Tree<T>> copy = new LinkedList<>();
         if (hasLeftSon()) {
             copy.add(getLeftSonTree());
@@ -83,6 +97,10 @@ public class GeneralTree<T> extends AbstractTree<T> {
                     return tree;
                 }
             }
+        }
+        Tree<T> sonTree = hasLeftSon() ? getLeftSonTree().getSonTree(node) : null;
+        while(sonTree == null) {
+            sonTree = 
         }
         return null;
     }

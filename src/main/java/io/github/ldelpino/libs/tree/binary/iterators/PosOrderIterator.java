@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.ldelpino.libs.tree.binary;
+package io.github.ldelpino.libs.tree.binary.iterators;
+
+import io.github.ldelpino.libs.tree.binary.BinaryTree;
+import io.github.ldelpino.libs.tree.binary.BinaryTreeIterator;
 
 /**
  *

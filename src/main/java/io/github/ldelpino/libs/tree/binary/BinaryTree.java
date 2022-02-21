@@ -15,39 +15,87 @@
  */
 package io.github.ldelpino.libs.tree.binary;
 
+import io.github.ldelpino.libs.tree.binary.iterators.PosOrderIterator;
+import io.github.ldelpino.libs.tree.binary.iterators.EntreOrderIterator;
+import io.github.ldelpino.libs.tree.binary.iterators.PreOrderIterator;
 import io.github.ldelpino.libs.tree.AbstractTree;
 import io.github.ldelpino.libs.tree.Tree;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 
 /**
- * Establece el concepto de un arol binario.
+ * Establece el concepto de un arbol binario.
  * <p>
- * Un arbol binario es una estructura de datos de conjuntos, donde los datos
- * estan ordenados jerarquicamente, donde cada nodo puede tener como maximo dos
- * hijos, uno izquierdo y uno derecho.</p>
+ * Un arbol binario binario es un arbol donde cada nodo puede tener como maximo
+ * 2 nodos hijos. Los arboles binarios mantienen las mismas propiedades de los
+ * arboles como estructura de datos generica con la unica diferencia que cada
+ * nodo solo puede tener dos hijos (nodo izquierdo y nodo derecho).</p>
+ * <p>
+ * </p>
  *
- * @author EL ROJO
- * @param <T> el tipo de dato que almacena cada nodo.
+ * @author Lazaro Cesar del Pino Olivera
+ * @since jdk 16.0.1
+ * @version 1.0
+ * @param <T> El tipo de dato de la informacion que almacena el nodo del arbol.
  */
 public class BinaryTree<T> extends AbstractTree<T> {
 
+    /**
+     * El nodo o hijo derecho del arbol.
+     */
     protected BinaryTree<T> rightSon;
 
+    /**
+     * Construye un nuevo arbol a partir del nodo raiz y su padre.
+     * <p>
+     * El constructor se utiliza principalmente para la creacion de
+     * subarboles.</p>
+     *
+     * @param root la informacion que almacena el nodo raiz del arbol.
+     * @param father el arbol que hace funcion de padre de este arbol.
+     */
     public BinaryTree(T root, BinaryTree<T> father) {
         super(root, father);
     }
 
+    /**
+     * Cronstuye un nuevo arbol a partir del nodo raiz.
+     * <p>
+     * El constructor se utiliza principalmente para la creacion de la jerarquia
+     * maxima de un arbol.</p>
+     *
+     * @param root la informacion que almacena el nodo raiz del arbol.
+     */
     public BinaryTree(T root) {
         super(root);
     }
 
+    /**
+     * Establece si el arbol es un arbol general o no.
+     * <p>
+     * Un arbol general es una estructura de datos donde cada nodo puede tener
+     * mas de dos hijos a diferencia de los arboles binarios donde el nodo solo
+     * puede tener como maximo dos hijos, un hijo izquierdo y un hijo
+     * derecho.</p>
+     * <p>
+     * El metodo es <strong>final</strong> para evitar inconsistencias o
+     * redundancias entre los diferentes tipos de arboles y siempre devolvera
+     * <strong>false</strong>.</p>
+     *
+     * @return false.
+     */
     @Override
     public final boolean isGeneralTree() {
         return false;
     }
 
+    /**
+     * Establece el nodo o hijo izquierdo de este arbol.
+     *
+     * @param leftSon el nodo izquierdo del arbol.
+     */
     public void setLeftSon(BinaryTree<T> leftSon) {
         this.leftSon = leftSon;
     }
@@ -57,6 +105,11 @@ public class BinaryTree<T> extends AbstractTree<T> {
         return (BinaryTree<T>) super.getLeftSonTree();
     }
 
+    /**
+     * Establece el nodo o hijo derecho de este arbol.
+     *
+     * @param rightSon el nodo derecho del arbol.
+     */
     public void setRightSon(BinaryTree<T> rightSon) {
         this.rightSon = rightSon;
     }
@@ -70,13 +123,20 @@ public class BinaryTree<T> extends AbstractTree<T> {
         return (BinaryTree<T>) super.getTreeFather();
     }
 
+    /**
+     * Establece el nodo o arbol padre de este arbol.
+     *
+     * @param father el nodo padre de este arbol.
+     */
     public void setTreeFather(BinaryTree<T> father) {
         this.father = father;
     }
 
     @Override
     public int getSonsCount() {
-        return hasLeftSon() ? 1 + (hasRightSon() ? 1 : 0) : 0;
+        int count = hasLeftSon() ? 1 : 0;
+        count += hasRightSon() ? 1 : 0;
+        return count;
     }
 
     public boolean hasRightSon() {
@@ -88,7 +148,7 @@ public class BinaryTree<T> extends AbstractTree<T> {
     }
 
     @Override
-    public Collection<Tree<T>> getTreeSons() {
+    public Collection<Tree<T>> getCollectionTreeSons() {
         ArrayList<Tree<T>> sons = new ArrayList<>(getSonsCount());
         if (hasLeftSon()) {
             sons.add(leftSon);
@@ -102,12 +162,16 @@ public class BinaryTree<T> extends AbstractTree<T> {
     @Override
     public BinaryTree<T> getSonTree(T node) {
         if (hasLeftSon() && leftSon.getRoot().equals(node)) {
-            return (BinaryTree<T>) leftSon;
+            return getLeftSonTree();
         }
         if (hasRightSon() && rightSon.getRoot().equals(node)) {
-            return rightSon;
+            return getRightSonTree();
         }
-        return null;
+        BinaryTree<T> sonTree = hasLeftSon() ? getLeftSonTree().getSonTree(node) : null;
+        if (sonTree == null) {
+            sonTree = hasRightSon() ? getRightSonTree().getSonTree(node) : null;
+        }
+        return sonTree;
     }
 
     public PreOrderIterator<T> preOrderIterator() {
@@ -115,11 +179,11 @@ public class BinaryTree<T> extends AbstractTree<T> {
     }
 
     public EntreOrderIterator<T> entreOrderIterator() {
-        return new EntreOrderIterator<>(getLeftSonTree());
+        return new EntreOrderIterator<>(this);
     }
 
     public PosOrderIterator<T> posOrderIterator() {
-        return new PosOrderIterator<>(getLeftSonTree());
+        return new PosOrderIterator<>(this);
     }
 
     @Override
@@ -130,18 +194,24 @@ public class BinaryTree<T> extends AbstractTree<T> {
     @Override
     public Collection<T> getLeaves() {
         ArrayList<T> leaves = new ArrayList<>();
-        if (hasLeftSon()) {
+        if (!hasLeftSon() && !hasRightSon()) {
+            leaves.add(getRoot());
+        } else if (hasLeftSon()) {
             leaves.addAll(leftSon.getLeaves());
-        }
-        if (hasRightSon()) {
+        } else {
             leaves.addAll(rightSon.getLeaves());
         }
         return leaves;
     }
 
     @Override
+    public boolean isNodeALeaf() {
+        return !hasLeftSon() && !hasRightSon();
+    }
+
+    @Override
     public boolean isNodeALeaf(T node) {
-        boolean leaf = getRoot().equals(node) && !hasLeftSon() && !hasRightSon();
+        boolean leaf = getRoot().equals(node) && isNodeALeaf();
         if (!leaf && hasLeftSon()) {
             leaf = getLeftSonTree().isNodeALeaf(node);
         }
@@ -214,5 +284,26 @@ public class BinaryTree<T> extends AbstractTree<T> {
     public void clear() {
         leftSon = null;
         rightSon = null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof BinaryTree b) {
+            return b.getRoot().equals(this.getRoot()) && b.getLeftSonTree().equals(this.getLeftSonTree())
+                    && b.getRightSonTree().equals(this.getRightSonTree());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 31 * hash + Objects.hashCode(this.rightSon);
+        return hash;
+    }
+    
+    @Override
+    public String toString() {
+        return "BinaryTree";
     }
 }

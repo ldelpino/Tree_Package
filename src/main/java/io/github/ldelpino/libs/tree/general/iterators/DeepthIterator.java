@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 EL ROJO.
+ * Copyright 2022 ldelpino.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.ldelpino.libs.tree.binary;
-
-import io.github.ldelpino.libs.tree.TreeIterator;
+package io.github.ldelpino.libs.tree.general.iterators;
 
 /**
- * La clase establece el iterador de los arboles binarios.
  *
- * @author Lazaro Cesar del Pino Olivera
- * @since jdk 16.0.1
- * @version 1.0
- * @param <T> El tipo de dato de la informacion que almacena el nodo del arbol.
+ * @author ldelpino
  */
-public abstract class BinaryTreeIterator<T> implements TreeIterator<T> {
-
-    protected BinaryTree<T> current;
-
-    public BinaryTreeIterator(BinaryTree<T> current) {
-        this.current = current;
-    }
+public class DeepthIterator {
+    
 }
