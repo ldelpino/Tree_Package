@@ -117,6 +117,15 @@ public interface Tree<T> extends Collection<T> {
     public int getSonsCount();
 
     /**
+     * Devuelve la cantidad de nodos que posee el arbol.
+     *
+     * @return devuelve <strong>1</strong> si el arbol es un nodo hoja, o un
+     * numero positivo mayor que <strong>1</strong> que establece la cantidad de
+     * nodos que posee este arbol.
+     */
+    public int getNodeCount();
+
+    /**
      * Devuelve el hijo izquierdo, si este existe.
      *
      * @return devuelve el hijo izquierdo si este existe, de lo contrario

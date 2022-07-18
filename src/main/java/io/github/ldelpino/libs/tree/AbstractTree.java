@@ -82,7 +82,7 @@ public abstract class AbstractTree<T> extends AbstractCollection<T> implements T
 
     @Override
     public int size() {
-        return getSonsCount() + 1;
+        return getNodeCount();
     }
 
     @Override
@@ -149,7 +149,7 @@ public abstract class AbstractTree<T> extends AbstractCollection<T> implements T
                 mayor = height;
             }
         }
-        return hasSons() ? mayor++ : 0;
+        return hasSons() ? mayor++ : 1;
     }
 
     @Override

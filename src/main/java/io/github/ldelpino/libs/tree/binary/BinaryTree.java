@@ -133,6 +133,13 @@ public class BinaryTree<T> extends AbstractTree<T> {
     }
 
     @Override
+    public int getNodeCount() {
+        int nodeCount = hasLeftSon() ? getLeftSonTree().getNodeCount() : 0;
+        nodeCount += hasRightSon() ? getRightSonTree().getNodeCount() : 0;
+        return nodeCount + 1;
+    }
+
+    @Override
     public int getSonsCount() {
         int count = hasLeftSon() ? 1 : 0;
         count += hasRightSon() ? 1 : 0;
@@ -301,7 +308,7 @@ public class BinaryTree<T> extends AbstractTree<T> {
         hash = 31 * hash + Objects.hashCode(this.rightSon);
         return hash;
     }
-    
+
     @Override
     public String toString() {
         return "BinaryTree";
