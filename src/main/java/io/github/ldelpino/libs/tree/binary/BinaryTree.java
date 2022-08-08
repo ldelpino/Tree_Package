@@ -48,6 +48,11 @@ public class BinaryTree<T> extends AbstractTree<T> {
     protected BinaryTree<T> rightSon;
 
     /**
+     * El arbol o nodo izquierdo de este arbol o null sino tiene.
+     */
+    protected BinaryTree<T> leftSon;
+
+    /**
      * Construye un nuevo arbol a partir del nodo raiz y su padre.
      * <p>
      * El constructor se utiliza principalmente para la creacion de
@@ -91,33 +96,6 @@ public class BinaryTree<T> extends AbstractTree<T> {
         return false;
     }
 
-    /**
-     * Establece el nodo o hijo izquierdo de este arbol.
-     *
-     * @param leftSon el nodo izquierdo del arbol.
-     */
-    public void setLeftSon(BinaryTree<T> leftSon) {
-        this.leftSon = leftSon;
-    }
-
-    @Override
-    public BinaryTree<T> getLeftSonTree() {
-        return (BinaryTree<T>) super.getLeftSonTree();
-    }
-
-    /**
-     * Establece el nodo o hijo derecho de este arbol.
-     *
-     * @param rightSon el nodo derecho del arbol.
-     */
-    public void setRightSon(BinaryTree<T> rightSon) {
-        this.rightSon = rightSon;
-    }
-
-    public BinaryTree<T> getRightSonTree() {
-        return rightSon;
-    }
-
     @Override
     public BinaryTree<T> getTreeFather() {
         return (BinaryTree<T>) super.getTreeFather();
@@ -130,6 +108,89 @@ public class BinaryTree<T> extends AbstractTree<T> {
      */
     public void setTreeFather(BinaryTree<T> father) {
         this.father = father;
+    }
+
+    /**
+     * Devuelve el subarbol correspondiente al hijo izquierdo, si este existe.
+     *
+     * @return devuelve el arbol correspondiente al hijo izquierdo si este
+     * existe, de lo contrario devuelve <strong>null</strong>.
+     */
+    public BinaryTree<T> getLeftSonTree() {
+        return leftSon;
+    }
+
+    /**
+     * Establece el nodo o hijo izquierdo de este arbol.
+     *
+     * @param leftSon el nodo izquierdo del arbol.
+     */
+    public void setLeftSonTree(BinaryTree<T> leftSon) {
+        this.leftSon = leftSon;
+    }
+
+    /**
+     * Establece si este arbol tiene hijo izquierdo o no.
+     *
+     * @return <strong>true</strong> si este arbol tiene hijo izquierdo, de lo
+     * contrario devuelve <strong>false</strong>.
+     */
+    public boolean hasLeftSon() {
+        return leftSon != null;
+    }
+
+    /**
+     * Devuelve el hijo izquierdo, si este existe.
+     *
+     * @return devuelve el hijo izquierdo si este existe, de lo contrario
+     * devuelve <strong>null</strong>.
+     */
+    public T getLeftSon() {
+        return hasSons() ? leftSon.getRoot() : null;
+    }
+
+    /**
+     * Establece el nodo o hijo derecho de este arbol.
+     *
+     * @param rightSon el nodo derecho del arbol.
+     */
+    public void setRightSonTree(BinaryTree<T> rightSon) {
+        this.rightSon = rightSon;
+    }
+
+    /**
+     * Devuelve el subarbol correspondiente al hijo derecho, si este existe.
+     *
+     * @return devuelve el arbol correspondiente al hijo derecho si este existe,
+     * de lo contrario devuelve <strong>null</strong>.
+     */
+    public BinaryTree<T> getRightSonTree() {
+        return rightSon;
+    }
+
+    /**
+     * Establece si este arbol tiene hijo derecho o no.
+     *
+     * @return <strong>true</strong> si este arbol tiene hijo derecho, de lo
+     * contrario devuelve <strong>false</strong>.
+     */
+    public boolean hasRightSon() {
+        return rightSon != null;
+    }
+
+    /**
+     * Devuelve el hijo derecho, si este existe.
+     *
+     * @return devuelve el hijo derecho si este existe, de lo contrario devuelve
+     * <strong>null</strong>.
+     */
+    public T getRightSon() {
+        return hasRightSon() ? getRightSonTree().getRoot() : null;
+    }
+
+    @Override
+    public boolean hasSons() {
+        return !hasLeftSon() && !hasRightSon();
     }
 
     @Override
@@ -146,14 +207,6 @@ public class BinaryTree<T> extends AbstractTree<T> {
         return count;
     }
 
-    public boolean hasRightSon() {
-        return rightSon != null;
-    }
-
-    public T getRightSon() {
-        return hasRightSon() ? getRightSonTree().getRoot() : null;
-    }
-
     @Override
     public Collection<Tree<T>> getCollectionTreeSons() {
         ArrayList<Tree<T>> sons = new ArrayList<>(getSonsCount());
@@ -168,6 +221,9 @@ public class BinaryTree<T> extends AbstractTree<T> {
 
     @Override
     public BinaryTree<T> getSonTree(T node) {
+        if (getRoot().equals(node)) {
+            return this;
+        }
         if (hasLeftSon() && leftSon.getRoot().equals(node)) {
             return getLeftSonTree();
         }
@@ -201,7 +257,7 @@ public class BinaryTree<T> extends AbstractTree<T> {
     @Override
     public Collection<T> getLeaves() {
         ArrayList<T> leaves = new ArrayList<>();
-        if (!hasLeftSon() && !hasRightSon()) {
+        if (!hasSons()) {
             leaves.add(getRoot());
         } else if (hasLeftSon()) {
             leaves.addAll(leftSon.getLeaves());
@@ -213,7 +269,7 @@ public class BinaryTree<T> extends AbstractTree<T> {
 
     @Override
     public boolean isNodeALeaf() {
-        return !hasLeftSon() && !hasRightSon();
+        return !hasSons();
     }
 
     @Override
@@ -261,6 +317,7 @@ public class BinaryTree<T> extends AbstractTree<T> {
         if (!added) {
             added = leftSon.add(e);
         }
+        //nunca tiene una razon para a;adirlo aki
         if (!added) {
             added = rightSon.add(e);
         }
@@ -304,8 +361,9 @@ public class BinaryTree<T> extends AbstractTree<T> {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 31 * hash + Objects.hashCode(this.rightSon);
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.rightSon);
+        hash = 97 * hash + Objects.hashCode(this.leftSon);
         return hash;
     }
 

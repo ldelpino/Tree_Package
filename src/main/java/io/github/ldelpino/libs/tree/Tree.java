@@ -92,14 +92,6 @@ public interface Tree<T> extends Collection<T> {
     public Tree<T> getTreeFather();
 
     /**
-     * Establece si este arbol tiene un hijo izquierdo.
-     *
-     * @return <strong>true</strong> si el arbol posee un hijo izquierdo, de lo
-     * contrario devuelve <strong>false</strong>.
-     */
-    public boolean hasLeftSon();
-
-    /**
      * Establece si este arbol tiene hijos.
      *
      * @return <strong>true</strong> si el arbol posee hijos, de lo contrario
@@ -124,22 +116,6 @@ public interface Tree<T> extends Collection<T> {
      * nodos que posee este arbol.
      */
     public int getNodeCount();
-
-    /**
-     * Devuelve el hijo izquierdo, si este existe.
-     *
-     * @return devuelve el hijo izquierdo si este existe, de lo contrario
-     * devuelve <strong>null</strong>.
-     */
-    public T getLeftSon();
-
-    /**
-     * Devuelve el subarbol correspondiente al hijo izquierdo, si este existe.
-     *
-     * @return devuelve el arbol correspondiente al hijo izquierdo si este
-     * existe, de lo contrario devuelve <strong>null</strong>.
-     */
-    public Tree<T> getLeftSonTree();
 
     /**
      * Devuelve una coleccion con los hijos del arbol.

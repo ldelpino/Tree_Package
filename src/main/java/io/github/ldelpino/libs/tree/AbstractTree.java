@@ -50,11 +50,6 @@ public abstract class AbstractTree<T> extends AbstractCollection<T> implements T
     protected Tree<T> father;
 
     /**
-     * El arbol o nodo izquierdo de este arbol o null sino tiene.
-     */
-    protected Tree<T> leftSon;
-
-    /**
      * Construye un nuevo arbol a partir del nodo raiz y su padre.
      * <p>
      * El constructor se utiliza principalmente para la creacion de
@@ -96,6 +91,11 @@ public abstract class AbstractTree<T> extends AbstractCollection<T> implements T
     }
 
     @Override
+    public Tree<T> getTreeFather() {
+        return father;
+    }
+
+    @Override
     public boolean hasFather() {
         return father != null;
     }
@@ -106,44 +106,25 @@ public abstract class AbstractTree<T> extends AbstractCollection<T> implements T
     }
 
     @Override
-    public Tree<T> getTreeFather() {
-        return father;
-    }
-
-    @Override
     public boolean hasSons() {
         return getSonsCount() > 0;
     }
 
     @Override
     public Collection<T> getSons() {
-        ArrayList<T> sons = new ArrayList<>(getSonsCount());
-        getCollectionTreeSons().forEach(tree -> {
+        Collection<Tree<T>> treeSons = getCollectionTreeSons();
+        ArrayList<T> sons = new ArrayList<>(treeSons.size());
+        treeSons.forEach(tree -> {
             sons.add(tree.getRoot());
         });
         return sons;
     }
 
     @Override
-    public boolean hasLeftSon() {
-        return leftSon != null;
-    }
-
-    @Override
-    public T getLeftSon() {
-        return hasSons() ? leftSon.getRoot() : null;
-    }
-
-    @Override
-    public Tree<T> getLeftSonTree() {
-        return leftSon;
-    }
-
-    @Override
     public int getTreeHeight() {
-        Collection<Tree<T>> sons = getCollectionTreeSons();
+        Collection<Tree<T>> treeSons = getCollectionTreeSons();
         int mayor = 0;
-        for (Tree<T> t : sons) {
+        for (Tree<T> t : treeSons) {
             int height = t.getTreeHeight();
             if (height > mayor) {
                 mayor = height;

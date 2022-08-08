@@ -13,16 +13,6 @@
  ## Documentacion
 									
  Para mas informacion sobre la documentacion de la libreria, dirijase [aqui](docs/index.md).
-
- ## Pendientes
-
- - Modelado de negocio de la libreria, que resuelva los problemas de la libreria de arboles de la CUJAE de 
- incluya otras funcionalidades utiles.
- - Creacion de la estructura general de la libreria.
- - Creacion de los paquetes, clases y metodos necesarios.
- - Pruebas unitarias.
- - Documentacion de las clases y metodos.
- - Documentacion de la utilizacion y reutilizacion de la libreria.
 		
  ## Requerimientos:
 
@@ -45,7 +35,7 @@
  
  ## Datos del desarrollador
 
-Version: 1.0
-Autor: Lázaro César del Pino Olivera. Copyright © 2022
-Direccion url: https://ldelpino.github.io/DateUtils/
-Correo electrónico: lazaro.delpino.olivera@gmail.com
+ Version: 1.0
+ Autor: Lázaro César del Pino Olivera. Copyright © 2022
+ Direccion url: https://ldelpino.github.io/DateUtils/
+ Correo electrónico: lazaro.delpino.olivera@gmail.com
