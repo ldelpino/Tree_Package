@@ -5,7 +5,7 @@
  ## ¿Que es Tree_Package?
 									
  **Tree_Package** es una libreria que permite la utilizacion y reutilizacion de arboles. Un arbol es una 
- estructura de conjunto de datos donde los datos estan distribuidos de forma jerarquica. Un arbol esta 
+ estructura de conjunto de datos donde los datos estan organizados de forma jerarquica. Un arbol esta 
  compuesto por subarboles que a su vez tambien pueden tener subarboles. La libreria incluye las clases y 
  metodos necesarios para la creacion y utilizacion de los distintos tipos de arboles y sus funcionalidades.
  La libreria esta pensada para ser reutilizada y poder extender los distintos tipos de arboles.
@@ -17,12 +17,12 @@
  ## Requerimientos:
 
  **JDK:**
- jdk 16.0.1
- La libreria fue realizada bajo la version 16.0.1 de la maquina virtual de Java.
+ jdk 18
+ La libreria fue realizada bajo la version 18.0 de la maquina virtual de Java.
 
  **Maven:**
- Apache Maven 3.8.1
- La libreria fue realizada a partir de [Apache Maven](https://maven.apache.org/) en su version 3.8.1
+ Apache Maven 3.8.6
+ La libreria fue realizada a partir de [Apache Maven](https://maven.apache.org/) en su version 3.8.6
 		
  ## Pruebas sobre DateUtils:
 		
@@ -30,12 +30,13 @@
 		
  ## Licencia:
 
- La libreria ha sido realizada bajo The Apache License v2.0. Para mas informacion dirijase 
+ La libreria ha sido realizada bajo The General Public License v3.0. Para mas informacion dirijase 
  al archivo [LICENSE](LICENSE).
  
  ## Datos del desarrollador
 
  Version: 1.0
  Autor: Lázaro César del Pino Olivera. Copyright © 2022
- Direccion url: https://ldelpino.github.io/DateUtils/
+ Direccion url del desarrollador: https://ldelpino.github.io/
+ Direccion url del repositorio: https://ldelpino.github.io/Tree_Package/
  Correo electrónico: lazaro.delpino.olivera@gmail.com
